@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        	<meta charset="utf-8">
+		<title> Assignment 2 </title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="js/index.js"> </script>
+		<link rel ="stylesheet" href="css/index.css"> </link>		
+    	</head>
+	<body>
+		<h1> Vapour <img src="img/Vapour_Logo.png" alt="Vapor Logo" width="60px" height="40px"> </img> </h1>
+		<div id ="topNav">
+			<a href = "home"> Home </a>
+			<a href = "aboutUs"> About Us </a>
+    			<a href = "search"> Search </a>
+			<a href = "createAccount" class = "noUser">Create Account </a>
+			<a href = "manageUsers" class ="admin" hidden="hidden"> Manage User </a>
+			<a href = "accountDetails" class ="user admin" hidden="hidden"> Account Details </a>
+			<a href ="cart"> Cart </a>
+			<a href = "modGames" class="admin" hidden="hidden"> Modify Games </a>
+			<button class="user admin" hidden="hidden" onclick ="logOut();"> Log Out </button>
+			<form class = "noUser"id = "logIn" onsubmit = "logIn();">
+				<label> Username: <input type = "text" id="loginUsername"></input> </label>
+				<label> Password<input type = "password" id="loginPassword" class="noUser"></input> </label>
+				<button type ="submit"> Login </button>
+			</form>
+			<h3 id= "currentUser" class="admin user" hidden="hidden"> </h3>
+		</div>
+		<main>
+			<article id ="manageUsers" hidden="hidden">
+				Enter a user 
+				<form id ="manageUsersForm">
+					<label> Username: <input id ="manageUserName" type= "text" onblur = "manageUser();"> </input> </label> <br />
+				</form>
+				<form id ="updateUsersForm" onsubmit="updateDetails(this);">
+					<label> First Name<input type="text" id ="manageUsersName"> <br /> </input> </label> 
+					<label> Phone Number  <input type="text" id ="manageUsersNumber"> <br /> </input> </label> 
+					<label> Email  <input type="email" id ="manageUsersEmail"> <br /> </input> </label> 
+					<label> Address   <input type="text" id = "manageUsersAddress"> <br /> </input> </label>
+					<input type="submit" value="Confirm Changes" onclick= "return verifyInput(this);"> </input> <br />		
+				</form> 
+				<input type="button" onclick="makeStaff();" value="Make Staff"> </input> <br /> 
+				<br />
+				<div id="manageUserCart">
+				</div>
+			</article>
+			<article id = "accountDetails" hidden="hidden">
+				<form id ="updateAccountForm" onsubmit="updateDetails(this);">
+					<label> First Name<input type="text" id ="accountDetailsName"> <br /> </input> </label> 
+					<label> Phone Number  <input type="text" id ="accountDetailsNumber"> <br /> </input> </label> 
+					<label> Email  <input type="email" id ="accountDetailsEmail"> <br /> </input> </label> 
+					<label> Address   <input type="text" id = "accountDetailsAddress"> <br /> </input> </label>
+					<input type ="submit" value ="Confirm Changes" onclick="return verifyInput(this);"> </input>
+				</form>	
+			</article>
+			<article id ="home">
+				<p> this is the home tab </p>
+			</article>
+			<article id = "search" hidden="hidden">
+				<form onsubmit="return false;" name="gameForm" id ="gameForm" >
+					<label> Game Name
+						<input type = "text" name = "gameName" id = "gameName"> </input>
+					</label>			
+					<input type = "submit" onclick = "dbSearch()"> </input> <br />
+				</form>	
+				
+				<form id="genreSearchList">
+					<input type="radio" name="genreRadio" id="Strategy" value="Strategy" onclick="genreSearch('Strategy');"> </input>
+					<label for="Strategy">Strategy</label>
+	
+					<input type="radio" name="genreRadio" id="Shooter" value="Shooter" onclick="genreSearch('Shooter');"> </input>
+					<label for="Shooter">Shooter</label>
+
+					<input type="radio" name="genreRadio" id="Story" value="Story" onclick="genreSearch('Story');"> </input>
+					<label for="Story">Story</label>
+
+					<input type="radio" name="genreRadio" id="Horror" value="Horror" onclick="genreSearch('Horror');"> </input>
+					<label for="Horror">Horror</label> 
+				
+					<input type="radio" name="genreRadio" id="Indie" value="Indie" onclick="genreSearch('Indie');"> </input>
+					<label for="Indie">Indie</label>
+				
+					<input type="radio" name="genreRadio" id="Puzzle" value="Puzzle" onclick="genreSearch('Puzzle');"> </input>
+					<label for="Puzzle">Puzzle</label>
+
+					<input type="radio" name="genreRadio" id="OpenWorld" value="OpenWorld" onclick="genreSearch('OpenWorld');"> </input>
+					<label for="OpenWorld">Open World</label>
+
+					<input type="radio" name="genreRadio" id="Action" value="Action" onclick="genreSearch('Action');"> </input>
+					<label for="Action">Action</label> 
+				</form>
+				<div id ="resultsHere">
+				</div>
+			</article>
+			<article id ="aboutUs" hidden="hidden">
+				<h2> About Us </h2>
+				<h3> Mitchell Wilson </h3>
+				<img src="img/mitch.png" alt="Photo of Mitchell Wilson"> </img>
+				<p>
+					One of the two founding fathers for the company. By being in tune with the video game market trends, I was able to solidify my place as one of the greats in video game development.
+				</p>
+				<h3> Liam Bland </h3>
+				<img src="img/liam.jpg" alt="Photo of Liam Bland" width="700px" height="500px"> </img>
+				<p>
+					Co-founder of the company. Experienced in the role of the Creative Director, I oversee the creative direction of most games we produce and release on this platform.
+				</p>
+				<h3>Mission Statement</h3>
+				<p>
+					Deliver quality games. Bridge the gap between communities of broad backgrounds by building connections through a common interst, video games.
+				</p>
+				<h3>Ethos</h3>
+				<p>
+					We strive to deliver a broad variety of high quality games with a low cost point that everyone can enjoy.
+				</p>
+				<h3>History</h3>
+				<p>
+					When this company was founded, the average game development spanned years. This is not how I wanted my company to function. By shortening the development time, we were able to capitalise on the willing market. By entering the market considerable time before our competition and giving the people what they wanted. This has led to us publishing over 30 games and becoming one of the top developers for new releases.
+				</p>
+				<h3>Products</h3>
+				<p>
+					Here at Vapor, we only sell games we know our followers will enjoy, our own. All games published we developed with our audience in mind. With the excess of money we acquire from our releases, we are able to give back to the community by having the cheapest games on the market.
+				</p>
+			</article>
+			<article id="createAccount" hidden="hidden">
+				<p>this is the createaccount tab </p>
+				<form id = "createAccountForm"onsubmit="createAccount();">
+					<label> Username:<input type="text" id ="createAccountUsername"><br /> </input> </label> 
+					<label> Password  <input type="password"id ="createAccountPassword"> <br /> </input> </label>
+					<label> First Name<input type="text" id ="createAccountName"> <br /> </input> </label> 
+					<label> Phone Number  <input type="text" id ="createAccountNumber"> <br /> </input> </label> 
+					<label> Email  <input type="email" id ="createAccountEmail"> <br /> </input> </label> 
+					<label> Address <input type="text" id = "createAccountAddress"> <br /> </input> </label>
+					<input type ="submit" onclick="return verifyInput(this);"> </input>
+				</form>
+			</article>
+			<article id ="cart" hidden="hidden">	
+				<div id = "cartHere"> </div>
+			</article>
+			<div id = "modGames" hidden="hidden">
+				<h3> Add A Game </h3>
+				<form name="addGame" id="addGame" onsubmit="return addVerify();">
+					<label for="addGameName">Title:</label>
+					<input type="text" id="addGameName"><br/> </input>
+					<input type="checkbox" name="genres" id="genre1" value="Strategy"> </input>
+					<label for="genre1">Strategy</label><br/>
+					<input type="checkbox" name="genres" id="genre2" value="Shooter"> </input>
+					<label for="genre2">Shooter</label><br/>
+					<input type="checkbox" name="genres" id="genre3" value="Story"> </input>
+					<label for="genre3">Shooter</label><br/>
+					<input type="checkbox" name="genres" id="genre4" value="Horror"> </input>
+					<label for="genre4">Horror</label><br/>
+					<input type="checkbox" name="genres" id="genre5" value="Indie"> </input>
+					<label for="genre5">Indie</label><br/>
+					<input type="checkbox" name="genres" id="genre6" value="Puzzle"> </input>
+					<label for="genre6">Puzzle</label><br/>
+					<input type="checkbox" name="genres" id="genre7" value="OpenWorld"> </input>
+					<label for="genre7">Open World</label><br/>
+					<input type="checkbox" name="genres" id="genre8" value="Action"> </input>
+					<label for="genre8">Action</label><br/>
+					<label for="stock">Stock:</label>
+					<input type="number" id="stock" min="0"><br/> </input>
+					<label for="price">Price:</label>
+					<input type="number" id="price" min="0"><br/> </input>
+					<input type="submit" id="addGameSubmit"> </input>
+				</form>
+				<h3> Remove a Game </h3>
+				<form id="removeGame" onsubmit="return removeVerify();">
+					<label for="removeGameName">Title: </label>
+					<input type="text" id="removeGameName"><br/> </input>
+	
+					<input type="submit" id="removeGameSubmit"> </input>
+				</form>
+			</div>
+		</main>
+		<footer>
+			<h3>Contact Us</h3>
+			<br/>Address: 354 Naples St, San Francisco, CA 94112, USA
+			<br/>Contact Phone: 776-2323
+			<br/>Email Address: BossMan@Vapor.com
+		</footer>
+	</body>
+</html> 
